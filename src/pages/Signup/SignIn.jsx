@@ -4,14 +4,12 @@ import Background from './components/Background';
 import {dark} from "../../assets/ContantsColor";
 import Field from './components/Field';
 import Btn from './components/btn';
-import TouchID from 'react-native-touch-id';
+import { CheckBiometricSupportednEnrolled, AuthenticateFingerPrint } from './biometricService';
 import { AuthContext } from '../../context/AuthContext';
+import { GetCredentials } from './keychainService';
+import FPBtn from './components/FingerPrintBtn';
 const SignIn = (props) => {
   const islogin = useContext(AuthContext)
-  const [biometryType, setBiometryType] = useState({
-    unifiedErrors: false,
-    passcodeFallback: false
-  })
 
   const [signinData, setSigninData] = useState({
     email: "",
@@ -44,53 +42,46 @@ const SignIn = (props) => {
 
   }
 
-  useEffect(()=>{
+  // useEffect(()=>{
+  //   loginWithFingerPrint();
+  // },[])
 
-    const isFingerPrintSupported = new Promise((resolve, reject) => {
-      TouchID.isSupported(biometryType)
-      .then((biometry) => {
-          if(biometry && biometry !== "FaceID"){
-            resolve(true)
+  const loginWithFingerPrint = () => {
+    const credentials = GetCredentials();
+    credentials.then(found => {
+      // =================================================
+      if(found && found.username){
+        const isFingerPrintSupported = CheckBiometricSupportednEnrolled()
+        isFingerPrintSupported.then(result => {
+          if (result === true) {
+            let isFingerPrintAuthenticated = AuthenticateFingerPrint();
+            isFingerPrintAuthenticated.then(suc =>{
+              console.log({email: found.username, password: found.password})
+              islogin.login({email: found.username, password: found.password})
+            }).catch(err => console.log(err))
           } else {
-            let fingerprintLableForOS = Platform.OS == "ios" ? "Touch ID":"Fingerprint";
-            reject( fingerprintLableForOS + " is not available on this device");
+            //show alert "TouchID has no enrolled fingers. Please go to settings and enable fingerprint on this device." that we returned from the service
+            Alert.alert(
+              "Alert",
+              result,
+              [{
+                text: 'Ok', onPress: () => {
+                  //redirect to settings
+                  Platform.OS === "ios"
+                    ? Linking.openURL('app-settings:')
+                    : AndroidOpenSettings.securitySettings() // Open security settings menu
+                }
+              }]
+            );
           }
-      })
-      .catch(error => {
-          let errorCode = Platform.OS == "ios" ? error.name : error.code;
-          if (errorCode === "LAErrorTouchIDNotEnrolled" || errorCode === "NOT_AVAILABLE" || errorCode === "NOT_ENROLLED") {
-        let fingerprintLableForOS = Platform.OS == "ios" ? "Touch ID" : "Fingerprint";
-              resolve(fingerprintLableForOS + " has no enrolled fingers. Please go to settings and enable " + fingerprintLableForOS + " on this device.");
-          } else {
-              reject(Platform.OS == "ios" ? error.message : translations.t(error.code));
-          }
-      });
-    })
-
-    isFingerPrintSupported.then(result => {
-      if (result === true) {
-        //fingerprint is supported and enrolled
-        //TODO: we’ll work here in the next step
-      } else {
-        //show alert "TouchID has no enrolled fingers. Please go to settings and enable fingerprint on this device." that we returned from the service
-        Alert.alert(
-          "Alert",
-          result,
-          [{
-            text: 'Ok', onPress: () => {
-              //redirect to settings
-              Platform.OS === "ios"
-                ? Linking.openURL('app-settings:')
-                : AndroidOpenSettings.securitySettings() // Open security settings menu
-            }
-          }]
-        );
+        },
+        error => { 
+          console.log(error);
+        })
       }
-    },
-    error => { 
-      console.log(error);
-   })
-  },[])
+      // =================================================
+    })
+  }
 
     return (
       <Background>
@@ -108,11 +99,15 @@ const SignIn = (props) => {
           <Btn textColor={dark.white} bgColor={dark.sky} btnLabel="Login" Press={()=> onSubmit()} />
         </View>
 
-        <View style={sty.dha}>
+        <View style={{...sty.dha, marginBottom: 20}}>
             <Text style={sty.textStyle}>Don't have an account ? </Text>
             <TouchableOpacity onPress={() => props.navigation.navigate("SignUp")}>
             <Text style={sty.textStyle2}>Signup</Text>
             </TouchableOpacity>
+        </View>
+
+        <View style={sty.dha}>
+          <FPBtn textColor={dark.white} bgColor={dark.sky} Press={loginWithFingerPrint} />
         </View>
 
         </Background>
@@ -149,7 +144,7 @@ const sty = StyleSheet.create({
     alignItems: 'flex-end', 
     width: "78%", 
     paddingRight: 16, 
-    marginBottom: 180
+    marginBottom: 170
   },
   textStyle: {
     color: dark.white, 

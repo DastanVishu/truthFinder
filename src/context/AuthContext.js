@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, {createContext, useEffect, useState} from 'react';
+import Keychain from 'react-native-keychain';
+import React, {createContext, useState} from 'react';
 import { useNavigation } from "@react-navigation/native";
 
 export const AuthContext = createContext();
@@ -15,7 +16,10 @@ export const AuthState = (props) => {
         setisLoading(true);
         const jsonValue = JSON.stringify(signupData)
         await AsyncStorage.setItem("loign", jsonValue);
-        setisLoading(false);
+        await Keychain.setGenericPassword(signupData.email, signupData.password)
+        .then(suc => {
+            setisLoading(false);
+        })
         navigation.navigate("login")
         alert("account is created successfuly")
     }
@@ -30,7 +34,7 @@ export const AuthState = (props) => {
         const database = await AsyncStorage.getItem("loign");
         const datafound = JSON.parse(database)
         if(datafound.email === email && datafound.password === password){
-          await AsyncStorage.setItem("login", jsonValue)
+          await AsyncStorage.setItem("login", jsonValue);
           setUserInfo(datafound);
           alert("welcome back "+datafound.firstname)
           setIslogin(true)
