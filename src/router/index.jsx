@@ -54,11 +54,8 @@ const Router = () => {
   const isLogin = useContext(AuthContext)
   const [logintrue, setLoginTrue] = useState(null)
   useEffect(()=>{
-    if(!isLogin.islogin){
-      isLogin.isLoggedin();
-    } else {
       setLoginTrue(isLogin.islogin)
-    }
+      isLogin.isLoggedin();
   },[isLogin.islogin])
 
   return (

@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 export const AuthState = (props) => {
     const navigation = useNavigation()
     const [userInfo, setUserInfo] = useState({});
-    const [islogin, setIslogin] = useState(false);
+    const [islogin, setIslogin] = useState(null);
     const [isLoading, setisLoading] = useState(false);
     const [splashLoading, setSplashLoading] = useState(false);
 
