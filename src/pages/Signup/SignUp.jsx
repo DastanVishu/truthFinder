@@ -16,6 +16,10 @@ const SignUp = (props) => {
     cpassword: ""
   });
 
+  useEffect(()=>{
+    authState.setisLoading(false)
+  },[])
+
   const handleData = (e) => {
     const data = {...signupData}
     // console.log(e);
@@ -36,12 +40,7 @@ const SignUp = (props) => {
       if(firstname && lastname && email && password && cpassword){
         try {
           authState.register(signupData)
-          // const jsonValue = JSON.stringify(signupData)
-          // await AsyncStorage.setItem("loign", jsonValue)
-          // alert("account is created successfuly")
-          // props.navigation.navigate("login")
         } catch (e) {
-          // saving error
           alert(e);
           console.log(e)
         }
@@ -104,9 +103,8 @@ const SignUp = (props) => {
 
 const sty = StyleSheet.create({
   body: {
+    flex: 1,
     alignItems: "center",
-    width: 430,
-    marginTop: 85
   },
   title: {
     color: dark.sky,

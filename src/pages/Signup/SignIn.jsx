@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {Alert, View, Text, StyleSheet, TouchableOpacity, Platform, AndroidOpenSettings, Linking } from 'react-native';
+import { KeyboardAvoidingView, Alert, View, Text, StyleSheet, TouchableOpacity, Platform, AndroidOpenSettings, Linking } from 'react-native';
 import Background from './components/Background';
 import {dark} from "../../assets/ContantsColor";
 import Field from './components/Field';
@@ -84,7 +84,7 @@ const SignIn = (props) => {
   }
 
     return (
-      <Background>
+        <Background>
         <View style={sty.body}>
           <Text style={sty.title}>Truth Finder</Text>
           <Text style={sty.title2}>Let's Find Together</Text>
@@ -118,7 +118,6 @@ const SignIn = (props) => {
 const sty = StyleSheet.create({
   body: {
     alignItems: "center",
-    width: 430,
     marginTop: 85
   },
   title: {

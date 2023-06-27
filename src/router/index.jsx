@@ -6,6 +6,7 @@ import { View, Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import SignIn from '../pages/Signup/SignIn';
 import Dashboard from '../pages/alltruth/Dashboard/Dashboard';
@@ -15,8 +16,6 @@ import CallLogs from '../pages/alltruth/CallLogs/CallLogs';
 
 import { AuthContext } from '../context/AuthContext';
 
-// import Icon from 'react-native-vector-icons/FontAwesome';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import SignUp from '../pages/Signup/SignUp';
 
 const Stack = createNativeStackNavigator();
@@ -26,19 +25,41 @@ function TabScreen (props) {
   return (
     <Tab.Navigator
       screenOptions={{
-        // tabBarActiveBackgroundColor: "red"
-        tabBarActiveTintColor: "black"
+        tabBarHideOnKeyboard: true,
+        // tabBarInactiveTintColor
+        // tabBarActiveBackgroundColor: "red",
+        tabBarActiveTintColor: "#900",
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          height: 50
+        }
+        
       }}
     >
       <Tab.Screen name="Dashboard"
       options={{
         tabBarLabel: "Dashboard",
-        tabBarIcon: ({color, size}) => <Icon name="view-dashboard" size={30} color="#900" />
+        tabBarIcon: ({color, size}) => <Icon name="desktop-outline" size={30} color={color} />
       }}
       component={Dashboard} />
-      <Tab.Screen name="CallLogs" component={CallLogs} />
-      <Tab.Screen name="Recoding" component={Recoding} />
-      <Tab.Screen name="Contacts" component={Contact} />
+      <Tab.Screen name="CallLogs"
+      options={{
+        tabBarLabel: "Call logs",
+        tabBarIcon: ({color, size}) => <Icon name="call-outline" size={30} color={color} />
+      }}
+       component={CallLogs} />
+      <Tab.Screen name="Recoding" 
+      options={{
+        tabBarLabel: "Recoding",
+        tabBarIcon: ({color, size}) => <Icon name="recording-outline" size={30} color={color} />
+      }}
+      component={Recoding} />
+      <Tab.Screen name="Contacts" 
+      options={{
+        tabBarLabel: "Contacts",
+        tabBarIcon: ({color, size}) => <Icon name="people-circle-outline" size={30} color={color} />
+      }}
+      component={Contact} />
     </Tab.Navigator>
   )
 }

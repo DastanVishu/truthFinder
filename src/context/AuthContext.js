@@ -36,7 +36,6 @@ export const AuthState = (props) => {
         if(datafound.email === email && datafound.password === password){
           await AsyncStorage.setItem("login", jsonValue);
           setUserInfo(datafound);
-          alert("welcome back "+datafound.firstname)
           setIslogin(true)
         } else {
           alert("wronge username or password")
@@ -70,6 +69,7 @@ export const AuthState = (props) => {
             login, 
             isLoggedin,
             logout,
+            setisLoading,
             isLoading,
             userInfo,
             islogin
