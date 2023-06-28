@@ -8,15 +8,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import Header from '../pages/header/header';
+
 import SignIn from '../pages/Signup/SignIn';
 import Dashboard from '../pages/alltruth/Dashboard/Dashboard';
 import Recoding from '../pages/alltruth/Recoding/Recoding';
 import Contact from '../pages/alltruth/Contacts/Contact';
 import CallLogs from '../pages/alltruth/CallLogs/CallLogs';
+import SignUp from '../pages/Signup/SignUp';
 
 import { AuthContext } from '../context/AuthContext';
 
-import SignUp from '../pages/Signup/SignUp';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,25 +41,29 @@ function TabScreen (props) {
       <Tab.Screen name="Dashboard"
       options={{
         tabBarLabel: "Dashboard",
-        tabBarIcon: ({color, size}) => <Icon name="desktop-outline" size={30} color={color} />
+        tabBarIcon: ({color, size}) => <Icon name="desktop-outline" size={30} color={color} />,
+        header: (props) => <Header props={props} /> 
       }}
       component={Dashboard} />
       <Tab.Screen name="CallLogs"
       options={{
         tabBarLabel: "Call logs",
-        tabBarIcon: ({color, size}) => <Icon name="call-outline" size={30} color={color} />
+        tabBarIcon: ({color, size}) => <Icon name="call-outline" size={30} color={color} />,
+        header: (props) => <Header props={props} /> 
       }}
        component={CallLogs} />
       <Tab.Screen name="Recoding" 
       options={{
         tabBarLabel: "Recoding",
-        tabBarIcon: ({color, size}) => <Icon name="recording-outline" size={30} color={color} />
+        tabBarIcon: ({color, size}) => <Icon name="recording-outline" size={30} color={color} />,
+        header: (props) => <Header props={props} /> 
       }}
       component={Recoding} />
       <Tab.Screen name="Contacts" 
       options={{
         tabBarLabel: "Contacts",
-        tabBarIcon: ({color, size}) => <Icon name="people-circle-outline" size={30} color={color} />
+        tabBarIcon: ({color, size}) => <Icon name="people-circle-outline" size={30} color={color} />,
+        header: (props) => <Header props={props} /> 
       }}
       component={Contact} />
     </Tab.Navigator>
