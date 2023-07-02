@@ -16,6 +16,7 @@ import Recoding from '../pages/alltruth/Recoding/Recoding';
 import Contact from '../pages/alltruth/Contacts/Contact';
 import CallLogs from '../pages/alltruth/CallLogs/CallLogs';
 import SignUp from '../pages/Signup/SignUp';
+import Profile from '../pages/profile/profile';
 
 import { AuthContext } from '../context/AuthContext';
 
@@ -66,6 +67,13 @@ function TabScreen (props) {
         header: (props) => <Header props={props} /> 
       }}
       component={Contact} />
+      <Tab.Screen name="Profile" 
+      options={{
+        tabBarLabel: "Profile",
+        tabBarIcon: ({color, size}) => <Icon name="person-circle" size={30} color={color} />,
+        header: (props) => <Header props={props} /> 
+      }}
+      component={Profile} />
     </Tab.Navigator>
   )
 }

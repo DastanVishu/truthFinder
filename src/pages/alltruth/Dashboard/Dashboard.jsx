@@ -10,7 +10,7 @@ const Dashboard = () => {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{color: "black"}}>Dashboard Screen  <Icon name="airplane-outline" size={30} color={dark.sky} /></Text>
-          <Btn textColor={dark.white} bgColor={dark.sky} btnLabel="Logout" Press={()=> auth.logout() } />
+          
         </View>
       );
 }
