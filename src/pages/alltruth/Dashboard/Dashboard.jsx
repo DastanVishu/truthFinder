@@ -4,14 +4,14 @@ import Btn from '../../../components/Button';
 import { AuthContext } from '../../../context/AuthContext';
 import { dark } from '../../../assets/ContantsColor';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Base from '../../../components/pageBase';
 
 const Dashboard = () => {
   const auth = useContext(AuthContext);
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Base>
           <Text style={{color: "black"}}>Dashboard Screen  <Icon name="airplane-outline" size={30} color={dark.sky} /></Text>
-          
-        </View>
+        </Base>
       );
 }
 
