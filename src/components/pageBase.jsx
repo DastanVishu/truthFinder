@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, ImageBackground, TouchableWithoutFeedback, Keyboard, SafeAreaView, ScrollView} from 'react-native';
+import { dark } from '../assets/ContantsColor';
 
 const Base = ({children}) => {
 
@@ -19,8 +20,9 @@ const Base = ({children}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center', 
-        justifyContent: 'center'
+        backgroundColor: dark.white
+        // alignItems: 'center', 
+        // justifyContent: 'center'
     },
     image: {
         flex: 1,

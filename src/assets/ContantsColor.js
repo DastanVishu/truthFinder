@@ -19,6 +19,7 @@ const commonColor = {
     white: '#FFFFFF',
     sky: '#831a23',
     gray: 'white',
+    red: '#e12525',
     ...commonColor,
   };
   
